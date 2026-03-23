@@ -9,7 +9,7 @@ load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'dev-secret-key')
-DATABASE = 'rsvp.db'
+DATABASE = os.environ.get('DATABASE_PATH', '/tmp/rsvp.db')
 
 oauth = OAuth(app)
 oauth.register(
