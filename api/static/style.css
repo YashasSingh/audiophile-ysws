@@ -207,6 +207,13 @@ body {
     box-shadow: 4px 4px 0 var(--outline);
 }
 
+.btn-disabled {
+    background: #d9d7d0;
+    color: #6f6b63;
+    box-shadow: none;
+    pointer-events: none;
+}
+
 .hero-notes {
     display: flex;
     flex-wrap: wrap;
@@ -487,6 +494,16 @@ body {
 .join-note {
     font-size: 14px;
     color: var(--graphite);
+}
+
+.join-note a {
+    color: var(--ink);
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.join-note a:hover {
+    color: var(--sunset);
 }
 
 .slack-link {
