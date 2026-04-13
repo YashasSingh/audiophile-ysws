@@ -3,225 +3,295 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Audiophile YSWS - Hack Club</title>
+    <title>Tick Tock - Build Your Custom Pocket Watch</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="background-orb orb-a" aria-hidden="true"></div>
-    <div class="background-orb orb-b" aria-hidden="true"></div>
-    <div class="background-grid" aria-hidden="true"></div>
+    <!-- Gear Animation Background -->
+    <svg class="gear-bg" viewBox="0 0 200 200" aria-hidden="true">
+        <g transform="translate(100,100)">
+            <circle cx="0" cy="0" r="8" fill="#d97706"/>
+            <path d="M 0,-60 L 10,-70 L 10,-90 L 0,-80 L -10,-90 L -10,-70 Z M 0,60 L 10,70 L 10,90 L 0,80 L -10,90 L -10,70 Z M 60,0 L 70,10 L 90,10 L 80,0 L 90,-10 L 70,-10 Z M -60,0 L -70,10 L -90,10 L -80,0 L -90,-10 L -70,-10 Z" fill="none" stroke="#d97706" stroke-width="2"/>
+        </g>
+    </svg>
 
-    <img class="flag-corner" src="{{ url_for('static', filename='flag-orpheus.top.png') }}" alt="" aria-hidden="true" loading="lazy">
+    <!-- Hack Club Logo -->
+    <img class="hackclub-logo" src="{{ url_for('static', filename='flag-orpheus.top.png') }}" alt="Hack Club" aria-hidden="true">
 
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="container nav-inner">
-            <h1 class="logo">Audiophile YSWS</h1>
+            <h1 class="logo">Tick Tock</h1>
             <div class="nav-links">
-                <a href="#tracks">Tracks</a>
-                <a href="#join">Join</a>
+                <a href="#about">About</a>
+                <a href="#modules">Modules</a>
+                <a href="#rules">Rules</a>
                 <a href="#faq">FAQ</a>
             </div>
         </div>
     </nav>
 
+    <!-- Hero Section -->
     <header class="hero">
-        <div class="container hero-inner reveal">
+        <div class="container hero-inner">
             <div class="hero-text">
-                <p class="eyebrow">Hack Club YSWS</p>
-                <h2>Build the Sound of the Future.<br>Ship It Loud.</h2>
-                <p class="hero-copy">A playful, serious YSWS for audio nerds. Hardware builds and software systems that actually ship.</p>
+                <p class="eyebrow">Hack Club's Hardware Track</p>
+                <h2>Build Your Custom Pocket Watch</h2>
+                <p class="hero-copy">Bridge digital logic and physical craftsmanship. Design a custom PCB, model a bespoke case, and assemble a functional timepiece that's entirely yours.</p>
                 <div class="hero-cta">
-                    <a href="/login" class="btn-primary">Join With Hack Club Auth</a>
-                    <a href="#tracks" class="btn-ghost">Explore Tracks</a>
+                    {% if user %}
+                        <a href="#modules" class="btn-primary">Start Building</a>
+                        <a href="/logout" class="btn-secondary">Logout</a>
+                    {% else %}
+                        <a href="/login" class="btn-primary">Join with Hack Club</a>
+                    {% endif %}
+                    <a href="#about" class="btn-ghost">Learn More</a>
                 </div>
                 <div class="hero-notes">
-                    <span>Hardware funding</span>
-                    <span>Software hours = IEM tiers</span>
-                    <span>Weekly shipping</span>
+                    <span>7-hour minimum curriculum</span>
+                    <span>Hardware grant + component kit</span>
+                    <span>Time-lapse proof of work</span>
                 </div>
-                {% if rsvp_status == 'success' %}
-                <div class="notice success">
-                    You are RSVP'd. Welcome aboard.
-                </div>
-                {% endif %}
             </div>
             <div class="hero-visual" aria-hidden="true">
-                <div class="hero-card">
-                    <p class="card-label">Project Signal</p>
-                    <div class="equalizer">
-                        <span></span><span></span><span></span><span></span><span></span>
-                    </div>
-                    <div class="wave"></div>
-                </div>
-                <div class="hero-card alt">
-                    <p class="card-label">Build Log</p>
-                    <ul>
-                        <li>Prototype sent</li>
-                        <li>Firmware shaping</li>
-                        <li>Demo day ready</li>
-                    </ul>
+                <div class="watch-face">
+                    <div class="watch-center"></div>
+                    <div class="watch-hand hour"></div>
+                    <div class="watch-hand minute"></div>
                 </div>
             </div>
         </div>
     </header>
 
-    <section id="tracks" class="tracks section">
+    <!-- About Section -->
+    <section id="about" class="about section">
         <div class="container">
-            <h3 class="section-title reveal">Pick Your Build Path</h3>
-            <div class="track-grid">
-                <article class="track-card reveal">
-                    <p class="track-label">Track 01</p>
-                    <h4>Hardware Builder</h4>
-                    <p>Design and build physical audio gear: visualizers, MP3 players, headphone mods, DAC boards, or entirely new devices. Tracking is based on update posts whenever something significant happens.</p>
-                    <ul>
-                        <li>Funding goes to project parts</li>
-                        <li>Ship updates every 1-5 hours of work</li>
-                        <li>Progress verified via update posts</li>
-                    </ul>
-                </article>
-                <article class="track-card reveal">
-                    <p class="track-label">Track 02</p>
-                    <h4>Software Builder</h4>
-                    <p>Build audio drivers, DSP tooling, plugins, and creative audio systems. Tracking is based on Hack Club Hackatime hours, with optional update posts.</p>
-                    <ul>
-                        <li>Hackatime logs verified work hours</li>
-                        <li>Updates optional but welcome</li>
-                        <li>IEM tiers unlocked by hours</li>
-                    </ul>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <section id="requirements" class="requirements section">
-        <div class="container">
-            <h3 class="section-title reveal">Requirements</h3>
-            <div class="requirements-card reveal">
-                <ul>
-                    <li>You must be 13-18 years old. Hack Club is a teen community.</li>
-                    <li>Your project can follow a tutorial, but it must show uniqueness.</li>
-                    <li>Software tools must have a real purpose. No farming hours for better IEMs.</li>
-                    <li class="larp-item">Only 10 percent AI allowed. I will know if you are <span class="larp-trigger larp-emphasis" data-gif-base="{{ url_for('static', filename='gifs') }}" data-gifs="larp-1.gif|larp-2.gif|larp-3.gif|larp-4.gif|larp-5.gif|larp-6.gif|larp-7.gif">LARPING</span>.<span class="larp-popup" role="tooltip" aria-hidden="true"><img alt="" loading="lazy"></span></li>
-                    <li>You must join the updates channel: <a href="https://slack.com/app_redirect?channel=C0AN8JMT2SY" target="_blank" rel="noreferrer">Audiophile YSWS Slack</a>.</li>
-                    <li>Open source everything.</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <section id="join" class="join section">
-        <div class="container reveal">
-            <div class="join-panel">
-                <div>
-                    <h3>RSVP Uses Hack Club Auth</h3>
-                    <p>The RSVP form is intentionally removed. We will use Hack Club Auth so everyone can join with a single account and keep their build history tied to their profile.</p>
+            <h3 class="section-title">What is Tick Tock?</h3>
+            <div class="about-grid">
+                <div class="about-card module-card">
+                    <h4>The Challenge</h4>
+                    <p>Design and build a custom pocket watch by combining PCB engineering, mechanical CAD design, and hands-on assembly. It's a 7-hour deep dive into hardware engineering.</p>
                 </div>
-                <div class="join-actions">
-                    {% if user %}
-                    <div class="join-status">
-                        <p>Signed in as {{ user.name or 'Hack Club member' }}.</p>
-                        <a href="/logout" class="btn-ghost">Log Out</a>
+                <div class="about-card module-card">
+                    <h4>The Process</h4>
+                    <p>Follow structured modules: schematic capture, PCB routing, case design, and assembly. We provide templates, guides, and direct support to help you succeed.</p>
+                </div>
+                <div class="about-card module-card">
+                    <h4>The Reward</h4>
+                    <p>Your custom PCB manufactured, your case 3D printed, and a component kit to bring it to life. Plus, your design becomes part of the Tick Tock gallery.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modules Section -->
+    <section id="modules" class="modules section">
+        <div class="container">
+            <h3 class="section-title">The Curriculum</h3>
+            <p class="section-subtitle">A structured path from concept to assembly</p>
+            
+            <div class="modules-grid">
+                <!-- Schematic Module -->
+                <article class="module-card">
+                    <div class="module-header">
+                        <span class="module-number">01</span>
+                        <h4>Schematic Design</h4>
+                        <span class="module-time">2 hours</span>
                     </div>
-                    {% else %}
-                    <a href="/login" class="btn-secondary btn-disabled" aria-disabled="true">Join With Hack Club Auth</a>
-                    <p class="join-note">Want early access? Share feedback with the organizer.</p>
-                    <p class="join-note">Having trouble migrating to Vercel? Fill out this form: <a href="https://forms.fillout.com/t/oVGJqqdRCJus" target="_blank" rel="noreferrer">support form</a>.</p>
-                    <a class="slack-link" href="https://slack.com/app_redirect?channel=C0AN8JMT2SY" target="_blank" rel="noreferrer">Audiophile YSWS Slack Channel</a>
-                    {% endif %}
+                    <p class="module-description">Mapping out the "brain" of your watch and selecting additional components.</p>
+                    <ul class="module-list">
+                        <li>✓ Component selection (MCU, display, RTC)</li>
+                        <li>✓ Power management design</li>
+                        <li>✓ Signal integrity basics</li>
+                        <li>✓ Deep-dive guides included</li>
+                    </ul>
+                    <div class="module-status">Status: <span>Not Started</span></div>
+                </article>
+
+                <!-- PCB Layout Module -->
+                <article class="module-card">
+                    <div class="module-header">
+                        <span class="module-number">02</span>
+                        <h4>PCB Layout</h4>
+                        <span class="module-time">2 hours</span>
+                    </div>
+                    <p class="module-description">Route traces, place components, and optimize for small-form-factor boards.</p>
+                    <ul class="module-list">
+                        <li>✓ Footprint placement strategies</li>
+                        <li>✓ Trace routing for high-speed signals</li>
+                        <li>✓ Design rule checks</li>
+                        <li>✓ Gerber file generation</li>
+                    </ul>
+                    <div class="module-status">Status: <span>Not Started</span></div>
+                </article>
+
+                <!-- CAD Design Module -->
+                <article class="module-card">
+                    <div class="module-header">
+                        <span class="module-number">03</span>
+                        <h4>Case Design (CAD)</h4>
+                        <span class="module-time">2 hours</span>
+                    </div>
+                    <p class="module-description">Design a protective, aesthetic enclosure that houses the PCB and battery perfectly.</p>
+                    <ul class="module-list">
+                        <li>✓ Download base case templates</li>
+                        <li>✓ Custom exterior design</li>
+                        <li>✓ Tolerance & fit testing</li>
+                        <li>✓ Export STL for 3D printing</li>
+                    </ul>
+                    <div class="module-status">Status: <span>Not Started</span></div>
+                </article>
+
+                <!-- Assembly & Misc Module -->
+                <article class="module-card">
+                    <div class="module-header">
+                        <span class="module-number">04</span>
+                        <h4>Assembly & BOM</h4>
+                        <span class="module-time">1 hour</span>
+                    </div>
+                    <p class="module-description">Fine-tune your bill of materials and prepare documentation for manufacturing.</p>
+                    <ul class="module-list">
+                        <li>✓ BOM verification</li>
+                        <li>✓ Assembly documentation</li>
+                        <li>✓ Final file submission</li>
+                        <li>✓ Manufacturing prep</li>
+                    </ul>
+                    <div class="module-status">Status: <span>Not Started</span></div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rules Section -->
+    <section id="rules" class="rules section">
+        <div class="container">
+            <h3 class="section-title">The Maker's Rules</h3>
+            <p class="section-subtitle">Two key requirements to maintain integrity and document your journey</p>
+            
+            <div class="rules-grid">
+                <div class="rule-card module-card">
+                    <h4>The Lapse Requirement</h4>
+                    <p>All work must be recorded using time-lapse software (Lapse or similar). This provides irrefutable "proof of work"—a visual journey from blank canvas to finished assembly.</p>
+                    <p class="rule-note"><strong>Why:</strong> We want to celebrate your journey and verify the work is yours.</p>
+                </div>
+                <div class="rule-card module-card">
+                    <h4>The Maker's Journal</h4>
+                    <p>Keep a live journal during the build with 3–5 short entries (1–2 sentences each). Reflect on challenges faced or breakthroughs made during specific chunks of the design.</p>
+                    <p class="rule-note"><strong>Why:</strong> Engineering is iterative; your journal captures that growth.</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Progress Tracker (for logged-in users) -->
+    {% if user %}
+    <section class="progress-section section">
+        <div class="container">
+            <h3 class="section-title">Your Build Progress</h3>
+            <div class="progress-tracker module-card">
+                <div class="watch-progress">
+                    <svg class="progress-clock" viewBox="0 0 200 200">
+                        <circle cx="100" cy="100" r="90" fill="none" stroke="rgba(217,119,6,0.1)" stroke-width="2"/>
+                        <circle cx="100" cy="100" r="85" fill="none" stroke="rgba(217,119,6,0.2)" stroke-width="1" stroke-dasharray="5,5"/>
+                        <!-- Hour hand -->
+                        <line x1="100" y1="100" x2="100" y2="40" stroke="#d97706" stroke-width="3" stroke-linecap="round"/>
+                        <!-- Minute hand -->
+                        <line x1="100" y1="100" x2="140" y2="60" stroke="#d97706" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+                        <!-- Center dot -->
+                        <circle cx="100" cy="100" r="5" fill="#d97706"/>
+                    </svg>
+                </div>
+                <div class="progress-info">
+                    <h4>Schematic Design</h4>
+                    <p class="progress-time">2 hours</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Maker's Journal (for logged-in users) -->
+    <section class="journal-section section">
+        <div class="container">
+            <h3 class="section-title">Your Maker's Journal</h3>
+            <div class="journal-container module-card">
+                <form class="journal-form" id="journalForm">
+                    <textarea class="journal-input" id="journalEntry" placeholder="Reflect on your progress... (keep it to 1-2 sentences)" maxlength="200"></textarea>
+                    <button type="submit" class="btn-primary">Log Entry</button>
+                </form>
+                <div class="journal-entries" id="journalEntries">
+                    <!-- Entries will load here -->
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- FAQ Section -->
     <section id="faq" class="faq section">
         <div class="container">
-            <h3 class="section-title reveal">FAQ</h3>
-            <div class="faq-list">
-                <article class="faq-item reveal">
-                    <button class="faq-question" type="button" aria-expanded="false">
-                        <span>What is Audiophile YSWS?</span>
-                        <span class="faq-marker">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>A collaborative YSWS for audio builders. Ship real hardware or software projects and unlock rewards as you keep shipping.</p>
-                    </div>
-                </article>
-                <article class="faq-item reveal">
-                    <button class="faq-question" type="button" aria-expanded="false">
-                        <span>How do I participate?</span>
-                        <span class="faq-marker">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Join with Hack Club Auth, pick hardware or software, and start shipping updates. Your progress is tied to your Hack Club identity.</p>
-                    </div>
-                </article>
-                <article class="faq-item reveal">
-                    <button class="faq-question" type="button" aria-expanded="false">
-                        <span>Do I need experience?</span>
-                        <span class="faq-marker">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Nope. Beginners are welcome. Small builds count and we will share starter ideas for both tracks.</p>
-                    </div>
-                </article>
-                <article class="faq-item reveal">
-                    <button class="faq-question" type="button" aria-expanded="false">
-                        <span>What counts as a valid project?</span>
-                        <span class="faq-marker">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Any project related to audio creation, playback, processing, visualization, hardware, or system-level tooling.</p>
-                    </div>
-                </article>
-                <article class="faq-item reveal">
-                    <button class="faq-question" type="button" aria-expanded="false">
-                        <span>How do hardware updates work?</span>
-                        <span class="faq-marker">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Hardware projects must ship an update every 1–5 hours of work. We track hardware progress through update posts whenever something significant happens.</p>
-                    </div>
-                </article>
-                <article class="faq-item reveal">
-                    <button class="faq-question" type="button" aria-expanded="false">
-                        <span>How do software updates and tracking work?</span>
-                        <span class="faq-marker">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Software updates are optional but encouraged. Software progress is tracked using Hack Club Hackatime to log build hours.</p>
-                    </div>
-                </article>
-                <article class="faq-item reveal">
-                    <button class="faq-question" type="button" aria-expanded="false">
-                        <span>How do software projects earn IEM tiers?</span>
-                        <span class="faq-marker">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Each software project logs verified build hours. Higher total hours unlock higher IEM tiers.</p>
-                    </div>
-                </article>
-                <article class="faq-item reveal">
-                    <button class="faq-question" type="button" aria-expanded="false">
-                        <span>What are the rewards?</span>
-                        <span class="faq-marker">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Hardware builders receive funding for parts. Software builders unlock IEM tiers based on Hackatime hours.</p>
-                    </div>
-                </article>
+            <h3 class="section-title">Frequently Asked Questions</h3>
+            <div class="faq-grid">
+                <details class="faq-item module-card">
+                    <summary>Do I need prior experience?</summary>
+                    <p>No! Tick Tock is designed for hardware novices while remaining challenging for veteran makers. We provide comprehensive guides and templates to get you started.</p>
+                </details>
+                <details class="faq-item module-card">
+                    <summary>What tools do I need?</summary>
+                    <p>For schematic and PCB: KiCad (free & open-source). For CAD: Fusion 360 (free for students) or similar. For time-lapse: Any smartphone with a time-lapse app or dedicated software like Lapse.</p>
+                </details>
+                <details class="faq-item module-card">
+                    <summary>How much does it cost?</summary>
+                    <p>Tick Tock covers manufacturing of your PCB and 3D printing of your case, plus a curated component kit. You only pay for any custom filament colors beyond the default.</p>
+                </details>
+                <details class="faq-item module-card">
+                    <summary>Can I take longer than 7 hours?</summary>
+                    <p>Absolutely! The 7-hour requirement is the minimum. If you spend extra time, you'll unlock additional component tiers and extended grant eligibility.</p>
+                </details>
+                <details class="faq-item module-card">
+                    <summary>What happens after I submit?</summary>
+                    <p>We verify your Lapse video and journal, review your designs, and manufacture your PCB and case. Shipping typically takes 2-3 weeks once production is complete.</p>
+                </details>
+                <details class="faq-item module-card">
+                    <summary>Can I showcase my build?</summary>
+                    <p>Yes! Your Lapse video may be featured on our TikTok/Instagram, and you'll be part of the Tick Tock gallery. All showcases are optional—it's your call.</p>
+                </details>
             </div>
         </div>
     </section>
 
-    <footer>
+    <!-- CTA Footer -->
+    <section class="cta-footer section">
         <div class="container">
-            <p>2026 Hack Club Audiophile YSWS</p>
+            <div class="cta-card module-card">
+                <h3>Ready to Build?</h3>
+                <p>Join the next cohort of makers. Design, build, and ship your custom pocket watch.</p>
+                {% if user %}
+                    <a href="#modules" class="btn-primary">Get Started</a>
+                {% else %}
+                    <a href="/login" class="btn-primary">Join with Hack Club</a>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <p>&copy; 2026 Tick Tock by Hack Club. Built for makers, by makers.</p>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="https://hackclub.com">Hack Club</a>
+            </div>
         </div>
     </footer>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
+
